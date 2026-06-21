@@ -18,15 +18,19 @@ DB = dict(
 )
 
 ORG_CODES = {
-    'Perfect Game':       'pg',
-    'USSSA':              'usssa',
-    'Triple Crown Sports':'tc',
+    'Perfect Game':         'pg',
+    'USSSA':                'usssa',
+    'Triple Crown Sports':  'tc',
+    'Gametime Tournaments': 'gt',
+    'Genesis Sports Complex':'gsc',
 }
 
 ORG_META = {
-    'pg':    {'label': 'Perfect Game',        'color': '#1F3A5F'},
-    'usssa': {'label': 'USSSA',               'color': '#BC5B39'},
-    'tc':    {'label': 'Triple Crown Sports', 'color': '#2F6F4E'},
+    'pg':    {'label': 'Perfect Game',         'color': '#1F3A5F'},
+    'usssa': {'label': 'USSSA',                'color': '#BC5B39'},
+    'tc':    {'label': 'Triple Crown Sports',  'color': '#2F6F4E'},
+    'gt':    {'label': 'Gametime Tournaments', 'color': '#EAB308'},
+    'gsc':   {'label': 'Genesis Sports Complex','color': '#EA580C'},
 }
 
 MONTHS = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -39,6 +43,7 @@ def fetch_events(cur):
                t.start_date, t.end_date, t.link, t.lat, t.lng
         FROM tournaments t
         JOIN organizers o ON t.organizer_id = o.id
+        WHERE t.start_age <= 14 AND t.end_age >= 14
         ORDER BY t.start_date
     """)
     events = []
@@ -77,7 +82,7 @@ def build_html(events):
     org_chips = '\n      '.join(
         f'<div class="chip" data-org="{code}"><span class="dot"></span>'
         f'{ORG_META[code]["label"]} <span class="count">({org_counts[code]})</span></div>'
-        for code in ['pg', 'usssa', 'tc']
+        for code in ['pg', 'usssa', 'tc', 'gt', 'gsc'] if org_counts[code]
     )
 
     month_chips = '\n        '.join(
@@ -104,6 +109,8 @@ def build_html(events):
     --clay:#BC5B39;
     --grass:#2F6F4E;
     --gold:#D7A23B;
+    --yellow:#EAB308;
+    --orange:#EA580C;
     --line:#E3DBC8;
   }}
   *{{box-sizing:border-box;}}
@@ -161,6 +168,8 @@ def build_html(events):
   .chip[data-org="pg"] .dot{{ background:var(--navy); }}
   .chip[data-org="usssa"] .dot{{ background:var(--clay); }}
   .chip[data-org="tc"] .dot{{ background:var(--grass); }}
+  .chip[data-org="gt"] .dot{{ background:var(--yellow); }}
+  .chip[data-org="gsc"] .dot{{ background:var(--orange); }}
   .chip .count{{ color:var(--ink-soft); font-weight:400; }}
   .chip[data-month]{{ padding:5px 11px; font-size:12px; }}
   #map{{ flex:1 1 auto; width:100%; background:#E8E2D2; }}
