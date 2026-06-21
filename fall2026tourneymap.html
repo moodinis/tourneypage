@@ -13,9 +13,9 @@
     --paper:#FFFDF8;
     --ink:#162338;
     --ink-soft:#4A5568;
-    --navy:#1F3A5F;    /* Perfect Game */
-    --clay:#BC5B39;    /* USSSA */
-    --grass:#2F6F4E;   /* Triple Crown */
+    --navy:#1F3A5F;
+    --clay:#BC5B39;
+    --grass:#2F6F4E;
     --gold:#D7A23B;
     --line:#E3DBC8;
   }
@@ -27,7 +27,6 @@
     color:var(--ink);
   }
   .app{ display:flex; flex-direction:column; height:100vh; }
-
   header{
     background:var(--paper);
     border-bottom:2px solid var(--ink);
@@ -55,7 +54,6 @@
     color:var(--ink-soft);
     letter-spacing:0.3px;
   }
-
   .filters{ display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
   .legend{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
   .chip{
@@ -78,10 +76,7 @@
   .chip[data-org="tc"] .dot{ background:var(--grass); }
   .chip .count{ color:var(--ink-soft); font-weight:400; }
   .chip[data-month]{ padding:5px 11px; font-size:12px; }
-
   #map{ flex:1 1 auto; width:100%; background:#E8E2D2; }
-
-  /* Leaflet tooltip override */
   .leaflet-tooltip.tourney-tip{
     background:var(--paper);
     border:none;
@@ -98,39 +93,11 @@
     min-width:200px;
     max-width:240px;
   }
-  .tip-card .org{
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:0.8px;
-    font-weight:700;
-    color:var(--ink-soft);
-    margin-bottom:3px;
-  }
-  .tip-card .name{
-    font-family:Georgia,serif;
-    font-size:14.5px;
-    font-weight:700;
-    line-height:1.25;
-    margin-bottom:5px;
-  }
-  .tip-card .loc{
-    font-size:12px;
-    color:var(--ink);
-    margin-bottom:2px;
-  }
-  .tip-card .date{
-    font-size:11.5px;
-    font-family:"SFMono-Regular",Menlo,Consolas,monospace;
-    color:var(--ink-soft);
-    margin-bottom:6px;
-  }
-  .tip-card .cta{
-    font-size:10.5px;
-    font-weight:600;
-    color:var(--gold);
-    letter-spacing:0.2px;
-  }
-
+  .tip-card .org{ font-size:10px; text-transform:uppercase; letter-spacing:0.8px; font-weight:700; color:var(--ink-soft); margin-bottom:3px; }
+  .tip-card .name{ font-family:Georgia,serif; font-size:14.5px; font-weight:700; line-height:1.25; margin-bottom:5px; }
+  .tip-card .loc{ font-size:12px; color:var(--ink); margin-bottom:2px; }
+  .tip-card .date{ font-size:11.5px; font-family:"SFMono-Regular",Menlo,Consolas,monospace; color:var(--ink-soft); margin-bottom:6px; }
+  .tip-card .cta{ font-size:10.5px; font-weight:600; color:var(--gold); letter-spacing:0.2px; }
   .marker-pin{
     width:16px; height:16px;
     border-radius:50%;
@@ -140,7 +107,6 @@
     transition:transform .12s ease;
   }
   .marker-pin:hover{ transform:scale(1.35); }
-
   .cluster-icon{
     display:flex; align-items:center; justify-content:center;
     border-radius:50%;
@@ -150,7 +116,6 @@
     border:2px solid var(--paper);
     box-shadow:0 1px 5px rgba(0,0,0,0.4);
   }
-
   @media (max-width: 640px){
     header{ padding:10px 14px; }
     .brand h1{ font-size:18px; }
@@ -171,14 +136,14 @@
       </svg>
       <div>
         <h1>14U Fall 2026</h1>
-        <p>Aug – Dec 2026 &nbsp;·&nbsp; <span id="visibleCount">40</span> tournaments</p>
+        <p>Aug – Dec 2026 &nbsp;&middot;&nbsp; <span id="visibleCount">40</span> tournaments</p>
       </div>
     </div>
     <div class="filters">
       <div class="legend" id="legend">
-        <div class="chip" data-org="pg"><span class="dot"></span>Perfect Game <span class="count">(5)</span></div>
-        <div class="chip" data-org="usssa"><span class="dot"></span>USSSA <span class="count">(16)</span></div>
-        <div class="chip" data-org="tc"><span class="dot"></span>Triple Crown <span class="count">(19)</span></div>
+      <div class="chip" data-org="pg"><span class="dot"></span>Perfect Game <span class="count">(5)</span></div>
+      <div class="chip" data-org="usssa"><span class="dot"></span>USSSA <span class="count">(16)</span></div>
+      <div class="chip" data-org="tc"><span class="dot"></span>Triple Crown Sports <span class="count">(19)</span></div>
       </div>
       <div class="legend" id="monthLegend">
         <div class="chip" data-month="Aug">Aug <span class="count">(2)</span></div>
@@ -196,54 +161,461 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
 <script>
 const ORG_META = {
-  pg:    { label: "Perfect Game",       color: "#1F3A5F" },
-  usssa: { label: "USSSA",              color: "#BC5B39" },
-  tc:    { label: "Triple Crown Sports",color: "#2F6F4E" }
+  "pg": {
+    "label": "Perfect Game",
+    "color": "#1F3A5F"
+  },
+  "usssa": {
+    "label": "USSSA",
+    "color": "#BC5B39"
+  },
+  "tc": {
+    "label": "Triple Crown Sports",
+    "color": "#2F6F4E"
+  }
 };
 
 const events = [
-  {org:"pg",    month:"Oct", name:"2026 14U PG WWBA World Championship (Major)", city:"West Palm Beach", state:"FL", dates:"Oct 16–19, 2026", link:"https://www.perfectgame.org/Events/Default.aspx?event=139828", lat:26.7153, lng:-80.0534},
-  {org:"pg",    month:"Oct", name:"2026 PG 14U BCS World Championship", city:"Sanford", state:"FL", dates:"Oct 2–5, 2026", link:"https://www.perfectgame.org/Events/Default.aspx?event=160452", lat:28.8028, lng:-81.2731},
-  {org:"pg",    month:"Sep", name:"2026 14U PG Northeast Champions Cup", city:"Staten Island", state:"NY", dates:"Sep 25–27, 2026", link:"https://www.perfectgame.org/Events/Default.aspx?event=158924", lat:40.5795, lng:-74.1502},
-  {org:"pg",    month:"Oct", name:"2026 14U (Open) PG Florida Champion's Cup", city:"Sanford", state:"FL", dates:"Oct 23–25, 2026", link:"https://www.perfectgame.org/Events/Default.aspx?event=140938", lat:28.8028, lng:-81.2731},
-  {org:"pg",    month:"Nov", name:"2026 14U (Major) National All-State Select Championship", city:"Tomball", state:"TX", dates:"Nov 7–9, 2026", link:"https://www.perfectgame.org/Events/Default.aspx?event=157071", lat:30.0972, lng:-95.6161},
-
-  {org:"usssa", month:"Sep", name:"Kentucky USSSA Fall State Tournament", city:"Elizabethtown", state:"KY", dates:"Sep 11, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=416634", lat:37.6975, lng:-85.8591},
-  {org:"usssa", month:"Sep", name:"Tennessee Fall State Championship", city:"Kingsport / Bristol / Johnson City", state:"TN", dates:"Sep 26, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=417516", lat:36.5484, lng:-82.5618},
-  {org:"usssa", month:"Oct", name:"Fun On The Field (Fall State)", city:"Oxford", state:"MS", dates:"Oct 2, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=416942", lat:34.3665, lng:-89.5192},
-  {org:"usssa", month:"Oct", name:"Nashville Belt Championship (Belts & Rings)", city:"Hendersonville", state:"TN", dates:"Oct 3, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=416614", lat:36.3048, lng:-86.6200},
-  {org:"usssa", month:"Oct", name:"CIS Pink Out State", city:"Des Moines", state:"IA", dates:"Oct 17–18, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=417440", lat:41.5868, lng:-93.6250},
-  {org:"usssa", month:"Oct", name:"USSSA Fall State Championship", city:"Gilbert / Peoria / Glendale / Chandler / Fountain Hills", state:"AZ", dates:"Oct 31, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=417081", lat:33.3528, lng:-111.7890},
-  {org:"usssa", month:"Nov", name:"The Yards State Championship (Belts & Rings)", city:"Columbia", state:"MS", dates:"Nov 7, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=409509", lat:31.2519, lng:-89.8323},
-  {org:"usssa", month:"Nov", name:"Clearwater Fall Championship (Bling Chains)", city:"Clearwater / Tampa Bay area", state:"FL", dates:"Nov 7, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=416222", lat:27.9659, lng:-82.8001},
-  {org:"usssa", month:"Nov", name:"Panhandle State Championship", city:"Pensacola", state:"FL", dates:"Nov 7, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=416540", lat:30.4213, lng:-87.2169},
-  {org:"usssa", month:"Nov", name:"Ultimate Texas Championship (State Rings)", city:"Katy", state:"TX", dates:"Nov 7, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=416690", lat:29.7858, lng:-95.8244},
-  {org:"usssa", month:"Nov", name:"Metro Fall State Championship (State Rings)", city:"Duncanville", state:"TX", dates:"Nov 7, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=416874", lat:32.6518, lng:-96.9083},
-  {org:"usssa", month:"Nov", name:"West Coast State Championship", city:"Bradenton", state:"FL", dates:"Nov 14, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=416345", lat:27.4989, lng:-82.5748},
-  {org:"usssa", month:"Nov", name:"East Coast Florida State Championship", city:"Viera (Space Coast Complex)", state:"FL", dates:"Nov 14, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=416444", lat:28.2639, lng:-80.7370},
-  {org:"usssa", month:"Nov", name:"Houston Fall Championship (State Rings)", city:"Houston", state:"TX", dates:"Nov 14, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=416731", lat:29.7604, lng:-95.3698},
-  {org:"usssa", month:"Dec", name:"Winter Nationals: Toys for Tots (PAP)", city:"Acadiana Area (Lafayette)", state:"LA", dates:"Dec 5, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=416571", lat:30.2241, lng:-92.0198},
-  {org:"usssa", month:"Dec", name:"13th Annual Winter Blast", city:"Las Vegas / Henderson", state:"NV", dates:"Dec 12, 2026", link:"https://www.usssa.com/baseball/event_home/?eventID=414049", lat:36.1699, lng:-115.1398},
-
-  {org:"tc",    month:"Aug", name:"San Diego Summer Sizzle", city:"San Diego", state:"CA", dates:"Aug 8–9, 2026", link:"https://www.tcsocalbaseball.com/san-diego-summer-sizzle.html", lat:32.7157, lng:-117.1611},
-  {org:"tc",    month:"Aug", name:"Temecula Summer Special", city:"Temecula", state:"CA", dates:"Aug 22–23, 2026", link:"https://www.tcsocalbaseball.com/temecula-summer-special.html", lat:33.4936, lng:-117.1484},
-  {org:"tc",    month:"Sep", name:"San Diego Labor Day", city:"San Diego", state:"CA", dates:"Sep 5–6, 2026", link:"https://www.tcsocalbaseball.com/san-diego-labor-day.html", lat:32.7157, lng:-117.1611},
-  {org:"tc",    month:"Sep", name:"Desert Midnight Madness", city:"Palm Desert area", state:"CA", dates:"Sep 5–6, 2026", link:"https://www.tcsocalbaseball.com/desert-midnight-madness.html", lat:33.7222, lng:-116.3744},
-  {org:"tc",    month:"Sep", name:"San Diego Classic", city:"San Diego", state:"CA", dates:"Sep 19–20, 2026", link:"https://www.tcsocalbaseball.com/san-diego-classic.html", lat:32.7157, lng:-117.1611},
-  {org:"tc",    month:"Sep", name:"Temecula Fall Classic", city:"Temecula", state:"CA", dates:"Sep 19–20, 2026", link:"https://www.tcsocalbaseball.com/temecula-fall-classic.html", lat:33.4936, lng:-117.1484},
-  {org:"tc",    month:"Sep", name:"Desert Fall Season Opener", city:"Palm Desert area", state:"CA", dates:"Sep 26–27, 2026", link:"https://www.tcsocalbaseball.com/desert-fall-season-opener.html", lat:33.7222, lng:-116.3744},
-  {org:"tc",    month:"Sep", name:"San Diego September to Remember", city:"San Diego", state:"CA", dates:"Sep 26–27, 2026", link:"https://www.tcsocalbaseball.com/san-diego-september-to-remember.html", lat:32.7157, lng:-117.1611},
-  {org:"tc",    month:"Oct", name:"Central Cal Oktoberfest", city:"Clovis / Central CA", state:"CA", dates:"Oct 10–11, 2026", link:"https://www.tcsocalbaseball.com/central-cal-oktoberfest.html", lat:36.8252, lng:-119.7029},
-  {org:"tc",    month:"Oct", name:"Fall Classic", city:"San Diego", state:"CA", dates:"Oct 17–18, 2026", link:"https://www.tcsocalbaseball.com/fall-classic.html", lat:32.7157, lng:-117.1611},
-  {org:"tc",    month:"Nov", name:"San Clemente Showdown", city:"San Clemente", state:"CA", dates:"Nov 7–8, 2026", link:"https://www.tcsocalbaseball.com/san-clemente-showdown.html", lat:33.4270, lng:-117.6120},
-  {org:"tc",    month:"Nov", name:"Veterans Day", city:"San Diego", state:"CA", dates:"Nov 7–8, 2026", link:"https://www.tcsocalbaseball.com/veterans-day.html", lat:32.7157, lng:-117.1611},
-  {org:"tc",    month:"Nov", name:"Central Cal Super Cup", city:"Clovis / Central CA", state:"CA", dates:"Nov 7–8, 2026", link:"https://www.tcsocalbaseball.com/central-cal-super-cup.html", lat:36.8252, lng:-119.7029},
-  {org:"tc",    month:"Nov", name:"Pre Thanksgiving", city:"Temecula", state:"CA", dates:"Nov 14–15, 2026", link:"https://www.tcsocalbaseball.com/pre-thanksgiving.html", lat:33.4936, lng:-117.1484},
-  {org:"tc",    month:"Nov", name:"Central Cal Pre Thanksgiving", city:"Clovis / Central CA", state:"CA", dates:"Nov 14–15, 2026", link:"https://www.tcsocalbaseball.com/central-cal-pre-thanksgiving.html", lat:36.8252, lng:-119.7029},
-  {org:"tc",    month:"Nov", name:"Desert Thanksgiving Qualifier", city:"Palm Desert", state:"CA", dates:"Nov 27–29, 2026", link:"https://www.tcsocalbaseball.com/desert-thanksgiving-qualifier.html", lat:33.7222, lng:-116.3744},
-  {org:"tc",    month:"Nov", name:"San Diego Thanksgiving", city:"San Diego", state:"CA", dates:"Nov 28–29, 2026", link:"https://www.tcsocalbaseball.com/san-diego-thanksgiving.html", lat:32.7157, lng:-117.1611},
-  {org:"tc",    month:"Dec", name:"Central Cal Toy Drive", city:"Clovis / Central CA", state:"CA", dates:"Dec 5–6, 2026", link:"https://www.tcsocalbaseball.com/central-cal-toy-drive.html", lat:36.8252, lng:-119.7029},
-  {org:"tc",    month:"Dec", name:"Ontario Sports Empire NIT", city:"Ontario", state:"CA", dates:"Dec 12–13, 2026", link:"https://www.tcsocalbaseball.com/ontario-sports-empire-nit.html", lat:34.0633, lng:-117.6509}
+  {
+    "org": "tc",
+    "month": "Aug",
+    "name": "San Diego Summer Sizzle",
+    "city": "San Diego",
+    "state": "CA",
+    "dates": "Aug 8\u20139, 2026",
+    "link": "https://www.tcsocalbaseball.com/san-diego-summer-sizzle.html",
+    "lat": 32.7157,
+    "lng": -117.1611
+  },
+  {
+    "org": "tc",
+    "month": "Aug",
+    "name": "Temecula Summer Special",
+    "city": "Temecula",
+    "state": "CA",
+    "dates": "Aug 22\u201323, 2026",
+    "link": "https://www.tcsocalbaseball.com/temecula-summer-special.html",
+    "lat": 33.4936,
+    "lng": -117.1484
+  },
+  {
+    "org": "tc",
+    "month": "Sep",
+    "name": "San Diego Labor Day",
+    "city": "San Diego",
+    "state": "CA",
+    "dates": "Sep 5\u20136, 2026",
+    "link": "https://www.tcsocalbaseball.com/san-diego-labor-day.html",
+    "lat": 32.7157,
+    "lng": -117.1611
+  },
+  {
+    "org": "tc",
+    "month": "Sep",
+    "name": "Desert Midnight Madness",
+    "city": "Palm Desert area",
+    "state": "CA",
+    "dates": "Sep 5\u20136, 2026",
+    "link": "https://www.tcsocalbaseball.com/desert-midnight-madness.html",
+    "lat": 33.7222,
+    "lng": -116.3744
+  },
+  {
+    "org": "usssa",
+    "month": "Sep",
+    "name": "KENTUCKY USSSA FALL STATE TOURNAMENT",
+    "city": "Elizabethtown",
+    "state": "KY",
+    "dates": "Sep 11, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416634",
+    "lat": 37.6975,
+    "lng": -85.8591
+  },
+  {
+    "org": "tc",
+    "month": "Sep",
+    "name": "San Diego Classic",
+    "city": "San Diego",
+    "state": "CA",
+    "dates": "Sep 19\u201320, 2026",
+    "link": "https://www.tcsocalbaseball.com/san-diego-classic.html",
+    "lat": 32.7157,
+    "lng": -117.1611
+  },
+  {
+    "org": "tc",
+    "month": "Sep",
+    "name": "Temecula Fall Classic",
+    "city": "Temecula",
+    "state": "CA",
+    "dates": "Sep 19\u201320, 2026",
+    "link": "https://www.tcsocalbaseball.com/temecula-fall-classic.html",
+    "lat": 33.4936,
+    "lng": -117.1484
+  },
+  {
+    "org": "pg",
+    "month": "Sep",
+    "name": "2026 14U PG Northeast Champions Cup",
+    "city": "Staten Island",
+    "state": "NY",
+    "dates": "Sep 25\u201327, 2026",
+    "link": "https://www.perfectgame.org/Events/Default.aspx?event=158924",
+    "lat": 40.5795,
+    "lng": -74.1502
+  },
+  {
+    "org": "usssa",
+    "month": "Sep",
+    "name": "Tennessee Fall State Championship",
+    "city": "Kingsport/Bristol/Johnson City",
+    "state": "TN",
+    "dates": "Sep 26, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=417516",
+    "lat": 36.5484,
+    "lng": -82.5618
+  },
+  {
+    "org": "tc",
+    "month": "Sep",
+    "name": "Desert Fall Season Opener",
+    "city": "Palm Desert area",
+    "state": "CA",
+    "dates": "Sep 26\u201327, 2026",
+    "link": "https://www.tcsocalbaseball.com/desert-fall-season-opener.html",
+    "lat": 33.7222,
+    "lng": -116.3744
+  },
+  {
+    "org": "tc",
+    "month": "Sep",
+    "name": "San Diego September to Remember",
+    "city": "San Diego",
+    "state": "CA",
+    "dates": "Sep 26\u201327, 2026",
+    "link": "https://www.tcsocalbaseball.com/san-diego-september-to-remember.html",
+    "lat": 32.7157,
+    "lng": -117.1611
+  },
+  {
+    "org": "pg",
+    "month": "Oct",
+    "name": "2026 PG 14U BCS World Championship",
+    "city": "Sanford",
+    "state": "FL",
+    "dates": "Oct 2\u20135, 2026",
+    "link": "https://www.perfectgame.org/Events/Default.aspx?event=160452",
+    "lat": 28.8028,
+    "lng": -81.2731
+  },
+  {
+    "org": "usssa",
+    "month": "Oct",
+    "name": "Fun On The Field (Fall State)",
+    "city": "Oxford",
+    "state": "MS",
+    "dates": "Oct 2, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416942",
+    "lat": 34.3665,
+    "lng": -89.5192
+  },
+  {
+    "org": "usssa",
+    "month": "Oct",
+    "name": "Nashville Belt Championship (USSSA Belts & Rings)",
+    "city": "Hendersonville (Nashville Area)",
+    "state": "TN",
+    "dates": "Oct 3, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416614",
+    "lat": 36.3048,
+    "lng": -86.62
+  },
+  {
+    "org": "tc",
+    "month": "Oct",
+    "name": "Central Cal Oktoberfest",
+    "city": "Clovis/Central CA",
+    "state": "CA",
+    "dates": "Oct 10\u201311, 2026",
+    "link": "https://www.tcsocalbaseball.com/central-cal-oktoberfest.html",
+    "lat": 36.8252,
+    "lng": -119.7029
+  },
+  {
+    "org": "pg",
+    "month": "Oct",
+    "name": "2026 14U PG WWBA World Championship (Major)",
+    "city": "West Palm Beach",
+    "state": "FL",
+    "dates": "Oct 16\u201319, 2026",
+    "link": "https://www.perfectgame.org/Events/Default.aspx?event=139828",
+    "lat": 26.7153,
+    "lng": -80.0534
+  },
+  {
+    "org": "usssa",
+    "month": "Oct",
+    "name": "CIS Pink Out State",
+    "city": "Des Moines",
+    "state": "IA",
+    "dates": "Oct 17\u201318, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=417440",
+    "lat": 41.5868,
+    "lng": -93.625
+  },
+  {
+    "org": "tc",
+    "month": "Oct",
+    "name": "Fall Classic",
+    "city": "San Diego",
+    "state": "CA",
+    "dates": "Oct 17\u201318, 2026",
+    "link": "https://www.tcsocalbaseball.com/fall-classic.html",
+    "lat": 32.7157,
+    "lng": -117.1611
+  },
+  {
+    "org": "pg",
+    "month": "Oct",
+    "name": "2026 14U (Open) PG Florida Champion's Cup",
+    "city": "Sanford",
+    "state": "FL",
+    "dates": "Oct 23\u201325, 2026",
+    "link": "https://www.perfectgame.org/Events/Default.aspx?event=140938",
+    "lat": 28.8028,
+    "lng": -81.2731
+  },
+  {
+    "org": "usssa",
+    "month": "Oct",
+    "name": "USSSA Fall State Championship",
+    "city": "Gilbert/Peoria/Glendale/Chandler/Fountain Hills",
+    "state": "AZ",
+    "dates": "Oct 31, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=417081",
+    "lat": 33.3528,
+    "lng": -111.789
+  },
+  {
+    "org": "pg",
+    "month": "Nov",
+    "name": "2026 14U (Major) National All-State Select Championship",
+    "city": "Tomball",
+    "state": "TX",
+    "dates": "Nov 7\u20139, 2026",
+    "link": "https://www.perfectgame.org/Events/Default.aspx?event=157071",
+    "lat": 30.0972,
+    "lng": -95.6161
+  },
+  {
+    "org": "usssa",
+    "month": "Nov",
+    "name": "THE YARDS STATE CHAMPIONSHIP (BELTS & RINGS)",
+    "city": "Columbia",
+    "state": "MS",
+    "dates": "Nov 7, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=409509",
+    "lat": 31.2519,
+    "lng": -89.8323
+  },
+  {
+    "org": "usssa",
+    "month": "Nov",
+    "name": "Clearwater Fall Championship (Bling Chains)",
+    "city": "Clearwater/Tampa Bay area",
+    "state": "FL",
+    "dates": "Nov 7, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416222",
+    "lat": 27.9659,
+    "lng": -82.8001
+  },
+  {
+    "org": "usssa",
+    "month": "Nov",
+    "name": "Panhandle State Championship",
+    "city": "Pensacola",
+    "state": "FL",
+    "dates": "Nov 7, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416540",
+    "lat": 30.4213,
+    "lng": -87.2169
+  },
+  {
+    "org": "usssa",
+    "month": "Nov",
+    "name": "ULTIMATE TEXAS CHAMPIONSHIP (STATE RINGS)",
+    "city": "Katy",
+    "state": "TX",
+    "dates": "Nov 7, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416690",
+    "lat": 29.7858,
+    "lng": -95.8244
+  },
+  {
+    "org": "usssa",
+    "month": "Nov",
+    "name": "METRO FALL STATE CHAMPIONSHIP (STATE RINGS)",
+    "city": "Duncanville",
+    "state": "TX",
+    "dates": "Nov 7, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416874",
+    "lat": 32.6518,
+    "lng": -96.9083
+  },
+  {
+    "org": "tc",
+    "month": "Nov",
+    "name": "Central Cal Super Cup",
+    "city": "Central CA",
+    "state": "CA",
+    "dates": "Nov 7\u20138, 2026",
+    "link": "https://www.tcsocalbaseball.com/central-cal-super-cup.html",
+    "lat": 36.8252,
+    "lng": -119.7029
+  },
+  {
+    "org": "tc",
+    "month": "Nov",
+    "name": "Veterans Day",
+    "city": "San Diego",
+    "state": "CA",
+    "dates": "Nov 7\u20138, 2026",
+    "link": "https://www.tcsocalbaseball.com/veterans-day.html",
+    "lat": 32.7157,
+    "lng": -117.1611
+  },
+  {
+    "org": "tc",
+    "month": "Nov",
+    "name": "San Clemente Showdown",
+    "city": "San Clemente",
+    "state": "CA",
+    "dates": "Nov 7\u20138, 2026",
+    "link": "https://www.tcsocalbaseball.com/san-clemente-showdown.html",
+    "lat": 33.427,
+    "lng": -117.612
+  },
+  {
+    "org": "tc",
+    "month": "Nov",
+    "name": "Central Cal Pre Thanksgiving",
+    "city": "Central CA",
+    "state": "CA",
+    "dates": "Nov 14\u201315, 2026",
+    "link": "https://www.tcsocalbaseball.com/central-cal-pre-thanksgiving.html",
+    "lat": 36.8252,
+    "lng": -119.7029
+  },
+  {
+    "org": "usssa",
+    "month": "Nov",
+    "name": "Houston Fall Championship (State Rings)",
+    "city": "Houston",
+    "state": "TX",
+    "dates": "Nov 14, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416731",
+    "lat": 29.7604,
+    "lng": -95.3698
+  },
+  {
+    "org": "usssa",
+    "month": "Nov",
+    "name": "East Coast Florida State Championship",
+    "city": "Space Coast Complex (Viera)",
+    "state": "FL",
+    "dates": "Nov 14, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416444",
+    "lat": 28.2639,
+    "lng": -80.737
+  },
+  {
+    "org": "usssa",
+    "month": "Nov",
+    "name": "West Coast State Championship",
+    "city": "Bradenton",
+    "state": "FL",
+    "dates": "Nov 14, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416345",
+    "lat": 27.4989,
+    "lng": -82.5748
+  },
+  {
+    "org": "tc",
+    "month": "Nov",
+    "name": "Pre Thanksgiving",
+    "city": "Temecula",
+    "state": "CA",
+    "dates": "Nov 14\u201315, 2026",
+    "link": "https://www.tcsocalbaseball.com/pre-thanksgiving.html",
+    "lat": 33.4936,
+    "lng": -117.1484
+  },
+  {
+    "org": "tc",
+    "month": "Nov",
+    "name": "Desert Thanksgiving Qualifier",
+    "city": "Palm Desert",
+    "state": "CA",
+    "dates": "Nov 27\u201329, 2026",
+    "link": "https://www.tcsocalbaseball.com/desert-thanksgiving-qualifier.html",
+    "lat": 33.7222,
+    "lng": -116.3744
+  },
+  {
+    "org": "tc",
+    "month": "Nov",
+    "name": "San Diego Thanksgiving",
+    "city": "San Diego",
+    "state": "CA",
+    "dates": "Nov 28\u201329, 2026",
+    "link": "https://www.tcsocalbaseball.com/san-diego-thanksgiving.html",
+    "lat": 32.7157,
+    "lng": -117.1611
+  },
+  {
+    "org": "tc",
+    "month": "Dec",
+    "name": "Central Cal Toy Drive",
+    "city": "Central CA",
+    "state": "CA",
+    "dates": "Dec 5\u20136, 2026",
+    "link": "https://www.tcsocalbaseball.com/central-cal-toy-drive.html",
+    "lat": 36.8252,
+    "lng": -119.7029
+  },
+  {
+    "org": "usssa",
+    "month": "Dec",
+    "name": "Winter Nationals: Toys for Tots - PAP",
+    "city": "Acadiana Area",
+    "state": "LA",
+    "dates": "Dec 5, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416571",
+    "lat": 30.2241,
+    "lng": -92.0198
+  },
+  {
+    "org": "usssa",
+    "month": "Dec",
+    "name": "13th Annual Winter Blast",
+    "city": "Las Vegas/Henderson",
+    "state": "NV",
+    "dates": "Dec 12, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=414049",
+    "lat": 36.1699,
+    "lng": -115.1398
+  },
+  {
+    "org": "tc",
+    "month": "Dec",
+    "name": "Ontario Sports Empire NIT",
+    "city": "Ontario",
+    "state": "CA",
+    "dates": "Dec 12\u201313, 2026",
+    "link": "https://www.tcsocalbaseball.com/ontario-sports-empire-nit.html",
+    "lat": 34.0633,
+    "lng": -117.6509
+  }
 ];
 
 const map = L.map('map', { scrollWheelZoom: true, zoomControl: true }).setView([37.8, -96], 4);
@@ -286,7 +658,6 @@ const allMarkers = events.map(ev => {
     iconAnchor: [8, 8]
   });
   const marker = L.marker([ev.lat, ev.lng], { icon });
-
   const tipHtml = `
     <div class="tip-card" style="border-left-color:${color};">
       <div class="org">${ORG_META[ev.org].label}</div>
@@ -295,14 +666,7 @@ const allMarkers = events.map(ev => {
       <div class="date">${ev.dates}</div>
       <div class="cta">Click pin to open event page ↗</div>
     </div>`;
-
-  marker.bindTooltip(tipHtml, {
-    direction: 'top',
-    offset: [0, -10],
-    className: 'tourney-tip',
-    sticky: true
-  });
-
+  marker.bindTooltip(tipHtml, { direction: 'top', offset: [0, -10], className: 'tourney-tip', sticky: true });
   marker.on('click', () => window.open(ev.link, '_blank', 'noopener,noreferrer'));
   return marker;
 });
@@ -311,7 +675,7 @@ const bounds = L.featureGroup(allMarkers).getBounds();
 map.fitBounds(bounds, { padding: [50, 50] });
 
 const activeOrgs   = new Set(Object.keys(ORG_META));
-const activeMonths = new Set(['Aug','Sep','Oct','Nov','Dec']);
+const activeMonths = new Set(["Aug", "Sep", "Oct", "Nov", "Dec"]);
 
 function rebuildMarkers(){
   Object.values(clusterGroups).forEach(g => g.clearLayers());
