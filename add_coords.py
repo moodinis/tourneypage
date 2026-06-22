@@ -1,3 +1,4 @@
+# clean on 6/21
 import os
 
 import mysql.connector

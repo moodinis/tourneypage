@@ -1,3 +1,4 @@
+# clean on 6/21
 """
 build.py — regenerates fall2026tourneymap.html from the tourneydatabase MySQL instance.
 Run this whenever tournament or organizer data changes.
