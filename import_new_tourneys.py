@@ -1,11 +1,16 @@
-import openpyxl
-import mysql.connector
+import os
 from datetime import datetime
 
+import mysql.connector
+import openpyxl
+from dotenv import load_dotenv
+
+load_dotenv()
+
 DB = dict(
-    host='34.45.11.139', port=3306,
-    user='LBDtbd', password='APIG!9bPG',
-    database='tourneydatabase', ssl_disabled=False
+    host=os.environ['DB_HOST'], port=int(os.environ.get('DB_PORT', 3306)),
+    user=os.environ['DB_USER'], password=os.environ['DB_PASSWORD'],
+    database=os.environ['DB_NAME'], ssl_disabled=False
 )
 
 CITY_COORDS = {

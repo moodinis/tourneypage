@@ -9,12 +9,17 @@ import sys
 from collections import defaultdict
 from datetime import date
 
+import os
+
 import mysql.connector
+from dotenv import load_dotenv
+
+load_dotenv()
 
 DB = dict(
-    host='34.45.11.139', port=3306,
-    user='LBDtbd', password='APIG!9bPG',
-    database='tourneydatabase', ssl_disabled=False
+    host=os.environ['DB_HOST'], port=int(os.environ.get('DB_PORT', 3306)),
+    user=os.environ['DB_USER'], password=os.environ['DB_PASSWORD'],
+    database=os.environ['DB_NAME'], ssl_disabled=False
 )
 
 ORG_CODES = {
