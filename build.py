@@ -23,6 +23,8 @@ ORG_CODES = {
     'Triple Crown Sports':  'tc',
     'Gametime Tournaments': 'gt',
     'Genesis Sports Complex':'gsc',
+    'KC Sports':            'kcs',
+    'Sports America':       'sa',
 }
 
 ORG_META = {
@@ -31,6 +33,8 @@ ORG_META = {
     'tc':    {'label': 'Triple Crown Sports',  'color': '#2F6F4E'},
     'gt':    {'label': 'Gametime Tournaments', 'color': '#EAB308'},
     'gsc':   {'label': 'Genesis Sports Complex','color': '#EA580C'},
+    'kcs':   {'label': 'KC Sports',            'color': '#7C3AED'},
+    'sa':    {'label': 'Sports America',       'color': '#0891B2'},
 }
 
 MONTHS = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -44,6 +48,7 @@ def fetch_events(cur):
         FROM tournaments t
         JOIN organizers o ON t.organizer_id = o.id
         WHERE t.start_age <= 14 AND t.end_age >= 14
+          AND MONTH(t.start_date) BETWEEN 8 AND 12
         ORDER BY t.start_date
     """)
     events = []
@@ -82,7 +87,7 @@ def build_html(events):
     org_chips = '\n      '.join(
         f'<div class="chip" data-org="{code}"><span class="dot"></span>'
         f'{ORG_META[code]["label"]} <span class="count">({org_counts[code]})</span></div>'
-        for code in ['pg', 'usssa', 'tc', 'gt', 'gsc'] if org_counts[code]
+        for code in ['pg', 'usssa', 'tc', 'gt', 'gsc', 'kcs', 'sa'] if org_counts[code]
     )
 
     month_chips = '\n        '.join(
@@ -170,6 +175,8 @@ def build_html(events):
   .chip[data-org="tc"] .dot{{ background:var(--grass); }}
   .chip[data-org="gt"] .dot{{ background:var(--yellow); }}
   .chip[data-org="gsc"] .dot{{ background:var(--orange); }}
+  .chip[data-org="kcs"] .dot{{ background:#7C3AED; }}
+  .chip[data-org="sa"] .dot{{ background:#0891B2; }}
   .chip .count{{ color:var(--ink-soft); font-weight:400; }}
   .chip[data-month]{{ padding:5px 11px; font-size:12px; }}
   #map{{ flex:1 1 auto; width:100%; background:#E8E2D2; }}

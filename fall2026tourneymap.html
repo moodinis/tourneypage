@@ -78,6 +78,8 @@
   .chip[data-org="tc"] .dot{ background:var(--grass); }
   .chip[data-org="gt"] .dot{ background:var(--yellow); }
   .chip[data-org="gsc"] .dot{ background:var(--orange); }
+  .chip[data-org="kcs"] .dot{ background:#7C3AED; }
+  .chip[data-org="sa"] .dot{ background:#0891B2; }
   .chip .count{ color:var(--ink-soft); font-weight:400; }
   .chip[data-month]{ padding:5px 11px; font-size:12px; }
   #map{ flex:1 1 auto; width:100%; background:#E8E2D2; }
@@ -140,22 +142,24 @@
       </svg>
       <div>
         <h1>14U Fall 2026</h1>
-        <p>Aug – Dec 2026 &nbsp;&middot;&nbsp; <span id="visibleCount">65</span> tournaments</p>
+        <p>Aug – Dec 2026 &nbsp;&middot;&nbsp; <span id="visibleCount">77</span> tournaments</p>
       </div>
     </div>
     <div class="filters">
       <div class="legend" id="legend">
       <div class="chip" data-org="pg"><span class="dot"></span>Perfect Game <span class="count">(5)</span></div>
-      <div class="chip" data-org="usssa"><span class="dot"></span>USSSA <span class="count">(16)</span></div>
+      <div class="chip" data-org="usssa"><span class="dot"></span>USSSA <span class="count">(22)</span></div>
       <div class="chip" data-org="tc"><span class="dot"></span>Triple Crown Sports <span class="count">(19)</span></div>
       <div class="chip" data-org="gt"><span class="dot"></span>Gametime Tournaments <span class="count">(16)</span></div>
       <div class="chip" data-org="gsc"><span class="dot"></span>Genesis Sports Complex <span class="count">(9)</span></div>
+      <div class="chip" data-org="kcs"><span class="dot"></span>KC Sports <span class="count">(3)</span></div>
+      <div class="chip" data-org="sa"><span class="dot"></span>Sports America <span class="count">(3)</span></div>
       </div>
       <div class="legend" id="monthLegend">
-        <div class="chip" data-month="Aug">Aug <span class="count">(7)</span></div>
-        <div class="chip" data-month="Sep">Sep <span class="count">(17)</span></div>
-        <div class="chip" data-month="Oct">Oct <span class="count">(18)</span></div>
-        <div class="chip" data-month="Nov">Nov <span class="count">(19)</span></div>
+        <div class="chip" data-month="Aug">Aug <span class="count">(9)</span></div>
+        <div class="chip" data-month="Sep">Sep <span class="count">(24)</span></div>
+        <div class="chip" data-month="Oct">Oct <span class="count">(19)</span></div>
+        <div class="chip" data-month="Nov">Nov <span class="count">(21)</span></div>
         <div class="chip" data-month="Dec">Dec <span class="count">(4)</span></div>
       </div>
     </div>
@@ -186,6 +190,14 @@ const ORG_META = {
   "gsc": {
     "label": "Genesis Sports Complex",
     "color": "#EA580C"
+  },
+  "kcs": {
+    "label": "KC Sports",
+    "color": "#7C3AED"
+  },
+  "sa": {
+    "label": "Sports America",
+    "color": "#0891B2"
   }
 };
 
@@ -257,6 +269,28 @@ const events = [
     "lng": -90.4432
   },
   {
+    "org": "kcs",
+    "month": "Aug",
+    "name": "KC Sports Weekend Tournament",
+    "city": "Liberty",
+    "state": "MO",
+    "dates": "Aug 23\u201325, 2026",
+    "link": "https://www.kcsports.org/",
+    "lat": 39.2461,
+    "lng": -94.4191
+  },
+  {
+    "org": "sa",
+    "month": "Aug",
+    "name": "Sports America Weekend Tournament",
+    "city": "Oak Grove",
+    "state": "MO",
+    "dates": "Aug 24\u201325, 2026",
+    "link": "https://sportsamericausa.com/events/",
+    "lat": 38.9753,
+    "lng": -94.1327
+  },
+  {
     "org": "gt",
     "month": "Aug",
     "name": "Fall Grand Slam (2027 Age Groups)",
@@ -266,6 +300,17 @@ const events = [
     "link": "https://www.playgametimestl.com/2026-tournament-schedule",
     "lat": 38.5126,
     "lng": -90.4432
+  },
+  {
+    "org": "usssa",
+    "month": "Sep",
+    "name": "Back 2 the Ballpark (Ebarb Memorial)",
+    "city": "Las Vegas/Henderson",
+    "state": "NV",
+    "dates": "Sep 5\u20137, 2026",
+    "link": "https://www.vegasvalleybaseball.com/tournaments/ebarb-memorial-back-2-the-ballpark",
+    "lat": 36.1699,
+    "lng": -115.1398
   },
   {
     "org": "gt",
@@ -279,17 +324,6 @@ const events = [
     "lng": -90.4432
   },
   {
-    "org": "tc",
-    "month": "Sep",
-    "name": "Desert Midnight Madness",
-    "city": "Palm Desert area",
-    "state": "CA",
-    "dates": "Sep 5\u20136, 2026",
-    "link": "https://www.tcsocalbaseball.com/desert-midnight-madness.html",
-    "lat": 33.7222,
-    "lng": -116.3744
-  },
-  {
     "org": "gsc",
     "month": "Sep",
     "name": "2026 Pick & Play September",
@@ -299,6 +333,17 @@ const events = [
     "link": "https://www.genesissportscomplex.com/home",
     "lat": 37.6594,
     "lng": -97.5742
+  },
+  {
+    "org": "tc",
+    "month": "Sep",
+    "name": "Desert Midnight Madness",
+    "city": "Palm Desert area",
+    "state": "CA",
+    "dates": "Sep 5\u20136, 2026",
+    "link": "https://www.tcsocalbaseball.com/desert-midnight-madness.html",
+    "lat": 33.7222,
+    "lng": -116.3744
   },
   {
     "org": "tc",
@@ -312,6 +357,28 @@ const events = [
     "lng": -117.1611
   },
   {
+    "org": "sa",
+    "month": "Sep",
+    "name": "Sports America Weekend Tournament",
+    "city": "Eastern Jackson County",
+    "state": "MO",
+    "dates": "Sep 6\u20138, 2026",
+    "link": "https://sportsamericausa.com/events/",
+    "lat": 38.9753,
+    "lng": -94.1327
+  },
+  {
+    "org": "kcs",
+    "month": "Sep",
+    "name": "KC Sports Weekend Tournament",
+    "city": "Liberty",
+    "state": "MO",
+    "dates": "Sep 6\u20138, 2026",
+    "link": "https://www.kcsports.org/",
+    "lat": 39.2461,
+    "lng": -94.4191
+  },
+  {
     "org": "usssa",
     "month": "Sep",
     "name": "KENTUCKY USSSA FALL STATE TOURNAMENT",
@@ -321,6 +388,28 @@ const events = [
     "link": "https://www.usssa.com/baseball/event_home/?eventID=416634",
     "lat": 37.6975,
     "lng": -85.8591
+  },
+  {
+    "org": "usssa",
+    "month": "Sep",
+    "name": "Gold Ribbon Showdown",
+    "city": "Las Vegas/Henderson",
+    "state": "NV",
+    "dates": "Sep 12\u201313, 2026",
+    "link": "https://www.vegasvalleybaseball.com/tournaments/gold-ribbon-showdown",
+    "lat": 36.1699,
+    "lng": -115.1398
+  },
+  {
+    "org": "gsc",
+    "month": "Sep",
+    "name": "2026 Pick & Play September",
+    "city": "Goddard",
+    "state": "KS",
+    "dates": "Sep 12\u201313, 2026",
+    "link": "https://www.genesissportscomplex.com/home",
+    "lat": 37.6594,
+    "lng": -97.5742
   },
   {
     "org": "gt",
@@ -334,15 +423,26 @@ const events = [
     "lng": -90.4432
   },
   {
-    "org": "gsc",
+    "org": "kcs",
     "month": "Sep",
-    "name": "2026 Pick & Play September",
-    "city": "Goddard",
-    "state": "KS",
-    "dates": "Sep 12\u201313, 2026",
-    "link": "https://www.genesissportscomplex.com/home",
-    "lat": 37.6594,
-    "lng": -97.5742
+    "name": "KC Sports Weekend Tournament",
+    "city": "Liberty",
+    "state": "MO",
+    "dates": "Sep 13\u201315, 2026",
+    "link": "https://www.kcsports.org/",
+    "lat": 39.2461,
+    "lng": -94.4191
+  },
+  {
+    "org": "sa",
+    "month": "Sep",
+    "name": "Sports America Weekend Tournament",
+    "city": "Oak Grove",
+    "state": "MO",
+    "dates": "Sep 14\u201315, 2026",
+    "link": "https://sportsamericausa.com/events/",
+    "lat": 38.9753,
+    "lng": -94.1327
   },
   {
     "org": "gsc",
@@ -367,15 +467,15 @@ const events = [
     "lng": -97.5742
   },
   {
-    "org": "gt",
+    "org": "tc",
     "month": "Sep",
-    "name": "September Slug Fest (2027 Age Groups)",
-    "city": "Fenton/St. Peters",
-    "state": "MO",
+    "name": "San Diego Classic",
+    "city": "San Diego",
+    "state": "CA",
     "dates": "Sep 19\u201320, 2026",
-    "link": "https://www.playgametimestl.com/2026-tournament-schedule",
-    "lat": 38.5126,
-    "lng": -90.4432
+    "link": "https://www.tcsocalbaseball.com/san-diego-classic.html",
+    "lat": 32.7157,
+    "lng": -117.1611
   },
   {
     "org": "tc",
@@ -389,15 +489,15 @@ const events = [
     "lng": -117.1484
   },
   {
-    "org": "tc",
+    "org": "gt",
     "month": "Sep",
-    "name": "San Diego Classic",
-    "city": "San Diego",
-    "state": "CA",
+    "name": "September Slug Fest (2027 Age Groups)",
+    "city": "Fenton/St. Peters",
+    "state": "MO",
     "dates": "Sep 19\u201320, 2026",
-    "link": "https://www.tcsocalbaseball.com/san-diego-classic.html",
-    "lat": 32.7157,
-    "lng": -117.1611
+    "link": "https://www.playgametimestl.com/2026-tournament-schedule",
+    "lat": 38.5126,
+    "lng": -90.4432
   },
   {
     "org": "pg",
@@ -409,6 +509,17 @@ const events = [
     "link": "https://www.perfectgame.org/Events/Default.aspx?event=158924",
     "lat": 40.5795,
     "lng": -74.1502
+  },
+  {
+    "org": "gt",
+    "month": "Sep",
+    "name": "Autumn Ambush (2027 Age Groups)",
+    "city": "Fenton/St. Peters",
+    "state": "MO",
+    "dates": "Sep 26\u201327, 2026",
+    "link": "https://www.playgametimestl.com/2026-tournament-schedule",
+    "lat": 38.5126,
+    "lng": -90.4432
   },
   {
     "org": "tc",
@@ -433,15 +544,15 @@ const events = [
     "lng": -117.1611
   },
   {
-    "org": "gt",
+    "org": "usssa",
     "month": "Sep",
-    "name": "Autumn Ambush (2027 Age Groups)",
-    "city": "Fenton/St. Peters",
-    "state": "MO",
+    "name": "Breakthrough Classic",
+    "city": "Henderson",
+    "state": "NV",
     "dates": "Sep 26\u201327, 2026",
-    "link": "https://www.playgametimestl.com/2026-tournament-schedule",
-    "lat": 38.5126,
-    "lng": -90.4432
+    "link": "https://www.vegasvalleybaseball.com/tournaments/breakthrough-classic",
+    "lat": 36.0397,
+    "lng": -114.9817
   },
   {
     "org": "usssa",
@@ -477,6 +588,28 @@ const events = [
     "lng": -89.5192
   },
   {
+    "org": "usssa",
+    "month": "Oct",
+    "name": "October Slugfest",
+    "city": "Henderson",
+    "state": "NV",
+    "dates": "Oct 3\u20134, 2026",
+    "link": "https://www.vegasvalleybaseball.com/tournaments/october-slugfest",
+    "lat": 36.0397,
+    "lng": -114.9817
+  },
+  {
+    "org": "gt",
+    "month": "Oct",
+    "name": "Fall Challenge (2027 Age Groups)",
+    "city": "Fenton/St. Peters",
+    "state": "MO",
+    "dates": "Oct 3\u20134, 2026",
+    "link": "https://www.playgametimestl.com/2026-tournament-schedule",
+    "lat": 38.5126,
+    "lng": -90.4432
+  },
+  {
     "org": "gsc",
     "month": "Oct",
     "name": "2026 King of the Rings (USSSA Sanctioned)",
@@ -497,17 +630,6 @@ const events = [
     "link": "https://www.genesissportscomplex.com/home",
     "lat": 37.6594,
     "lng": -97.5742
-  },
-  {
-    "org": "gt",
-    "month": "Oct",
-    "name": "Fall Challenge (2027 Age Groups)",
-    "city": "Fenton/St. Peters",
-    "state": "MO",
-    "dates": "Oct 3\u20134, 2026",
-    "link": "https://www.playgametimestl.com/2026-tournament-schedule",
-    "lat": 38.5126,
-    "lng": -90.4432
   },
   {
     "org": "usssa",
@@ -554,17 +676,6 @@ const events = [
     "lng": -80.0534
   },
   {
-    "org": "gt",
-    "month": "Oct",
-    "name": "Fall Rumble (2027 Age Groups)",
-    "city": "Fenton/St. Peters",
-    "state": "MO",
-    "dates": "Oct 17\u201318, 2026",
-    "link": "https://www.playgametimestl.com/2026-tournament-schedule",
-    "lat": 38.5126,
-    "lng": -90.4432
-  },
-  {
     "org": "tc",
     "month": "Oct",
     "name": "Fall Classic",
@@ -574,6 +685,17 @@ const events = [
     "link": "https://www.tcsocalbaseball.com/fall-classic.html",
     "lat": 32.7157,
     "lng": -117.1611
+  },
+  {
+    "org": "gt",
+    "month": "Oct",
+    "name": "Fall Rumble (2027 Age Groups)",
+    "city": "Fenton/St. Peters",
+    "state": "MO",
+    "dates": "Oct 17\u201318, 2026",
+    "link": "https://www.playgametimestl.com/2026-tournament-schedule",
+    "lat": 38.5126,
+    "lng": -90.4432
   },
   {
     "org": "usssa",
@@ -631,17 +753,6 @@ const events = [
     "lng": -90.4432
   },
   {
-    "org": "usssa",
-    "month": "Oct",
-    "name": "USSSA Fall State Championship",
-    "city": "Gilbert/Peoria/Glendale/Chandler/Fountain Hills",
-    "state": "AZ",
-    "dates": "Oct 31, 2026",
-    "link": "https://www.usssa.com/baseball/event_home/?eventID=417081",
-    "lat": 33.3528,
-    "lng": -111.789
-  },
-  {
     "org": "gsc",
     "month": "Oct",
     "name": "2026 Pick & Play",
@@ -653,15 +764,15 @@ const events = [
     "lng": -97.5742
   },
   {
-    "org": "tc",
-    "month": "Nov",
-    "name": "Veterans Day",
-    "city": "San Diego",
-    "state": "CA",
-    "dates": "Nov 7\u20138, 2026",
-    "link": "https://www.tcsocalbaseball.com/veterans-day.html",
-    "lat": 32.7157,
-    "lng": -117.1611
+    "org": "usssa",
+    "month": "Oct",
+    "name": "USSSA Fall State Championship",
+    "city": "Gilbert/Peoria/Glendale/Chandler/Fountain Hills",
+    "state": "AZ",
+    "dates": "Oct 31, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=417081",
+    "lat": 33.3528,
+    "lng": -111.789
   },
   {
     "org": "tc",
@@ -677,6 +788,17 @@ const events = [
   {
     "org": "tc",
     "month": "Nov",
+    "name": "Veterans Day",
+    "city": "San Diego",
+    "state": "CA",
+    "dates": "Nov 7\u20138, 2026",
+    "link": "https://www.tcsocalbaseball.com/veterans-day.html",
+    "lat": 32.7157,
+    "lng": -117.1611
+  },
+  {
+    "org": "tc",
+    "month": "Nov",
     "name": "San Clemente Showdown",
     "city": "San Clemente",
     "state": "CA",
@@ -684,6 +806,17 @@ const events = [
     "link": "https://www.tcsocalbaseball.com/san-clemente-showdown.html",
     "lat": 33.427,
     "lng": -117.612
+  },
+  {
+    "org": "usssa",
+    "month": "Nov",
+    "name": "Veterans Day Challenge",
+    "city": "Henderson/Las Vegas",
+    "state": "NV",
+    "dates": "Nov 7\u20139, 2026",
+    "link": "https://www.vegasvalleybaseball.com/tournaments/veterans-day-challenge",
+    "lat": 36.1699,
+    "lng": -115.1398
   },
   {
     "org": "gt",
@@ -752,17 +885,6 @@ const events = [
     "lng": -89.8323
   },
   {
-    "org": "pg",
-    "month": "Nov",
-    "name": "2026 14U (Major) National All-State Select Championship",
-    "city": "Tomball",
-    "state": "TX",
-    "dates": "Nov 7\u20139, 2026",
-    "link": "https://www.perfectgame.org/Events/Default.aspx?event=157071",
-    "lat": 30.0972,
-    "lng": -95.6161
-  },
-  {
     "org": "gsc",
     "month": "Nov",
     "name": "2026 Banana Split Baseball",
@@ -774,15 +896,15 @@ const events = [
     "lng": -97.5742
   },
   {
-    "org": "tc",
+    "org": "pg",
     "month": "Nov",
-    "name": "Central Cal Pre Thanksgiving",
-    "city": "Central CA",
-    "state": "CA",
-    "dates": "Nov 14\u201315, 2026",
-    "link": "https://www.tcsocalbaseball.com/central-cal-pre-thanksgiving.html",
-    "lat": 36.8252,
-    "lng": -119.7029
+    "name": "2026 14U (Major) National All-State Select Championship",
+    "city": "Tomball",
+    "state": "TX",
+    "dates": "Nov 7\u20139, 2026",
+    "link": "https://www.perfectgame.org/Events/Default.aspx?event=157071",
+    "lat": 30.0972,
+    "lng": -95.6161
   },
   {
     "org": "tc",
@@ -807,6 +929,17 @@ const events = [
     "lng": -95.3698
   },
   {
+    "org": "usssa",
+    "month": "Nov",
+    "name": "East Coast Florida State Championship",
+    "city": "Space Coast Complex (Viera)",
+    "state": "FL",
+    "dates": "Nov 14, 2026",
+    "link": "https://www.usssa.com/baseball/event_home/?eventID=416444",
+    "lat": 28.2639,
+    "lng": -80.737
+  },
+  {
     "org": "gt",
     "month": "Nov",
     "name": "Fall Finale (2027 Age Groups)",
@@ -820,17 +953,6 @@ const events = [
   {
     "org": "usssa",
     "month": "Nov",
-    "name": "East Coast Florida State Championship",
-    "city": "Space Coast Complex (Viera)",
-    "state": "FL",
-    "dates": "Nov 14, 2026",
-    "link": "https://www.usssa.com/baseball/event_home/?eventID=416444",
-    "lat": 28.2639,
-    "lng": -80.737
-  },
-  {
-    "org": "usssa",
-    "month": "Nov",
     "name": "West Coast State Championship",
     "city": "Bradenton",
     "state": "FL",
@@ -838,6 +960,28 @@ const events = [
     "link": "https://www.usssa.com/baseball/event_home/?eventID=416345",
     "lat": 27.4989,
     "lng": -82.5748
+  },
+  {
+    "org": "tc",
+    "month": "Nov",
+    "name": "Central Cal Pre Thanksgiving",
+    "city": "Central CA",
+    "state": "CA",
+    "dates": "Nov 14\u201315, 2026",
+    "link": "https://www.tcsocalbaseball.com/central-cal-pre-thanksgiving.html",
+    "lat": 36.8252,
+    "lng": -119.7029
+  },
+  {
+    "org": "usssa",
+    "month": "Nov",
+    "name": "Cranberry Classic (Dave Ruegge Memorial)",
+    "city": "Las Vegas/Henderson",
+    "state": "NV",
+    "dates": "Nov 27\u201329, 2026",
+    "link": "https://www.vegasvalleybaseball.com/tournaments/cranberry-classic",
+    "lat": 36.1699,
+    "lng": -115.1398
   },
   {
     "org": "tc",
@@ -862,17 +1006,6 @@ const events = [
     "lng": -117.1611
   },
   {
-    "org": "tc",
-    "month": "Dec",
-    "name": "Central Cal Toy Drive",
-    "city": "Central CA",
-    "state": "CA",
-    "dates": "Dec 5\u20136, 2026",
-    "link": "https://www.tcsocalbaseball.com/central-cal-toy-drive.html",
-    "lat": 36.8252,
-    "lng": -119.7029
-  },
-  {
     "org": "usssa",
     "month": "Dec",
     "name": "Winter Nationals: Toys for Tots - PAP",
@@ -882,6 +1015,17 @@ const events = [
     "link": "https://www.usssa.com/baseball/event_home/?eventID=416571",
     "lat": 30.2241,
     "lng": -92.0198
+  },
+  {
+    "org": "tc",
+    "month": "Dec",
+    "name": "Central Cal Toy Drive",
+    "city": "Central CA",
+    "state": "CA",
+    "dates": "Dec 5\u20136, 2026",
+    "link": "https://www.tcsocalbaseball.com/central-cal-toy-drive.html",
+    "lat": 36.8252,
+    "lng": -119.7029
   },
   {
     "org": "tc",
